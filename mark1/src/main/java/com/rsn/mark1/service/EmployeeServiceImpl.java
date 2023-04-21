@@ -4,11 +4,13 @@ import com.rsn.mark1.exception.InvalidCredentialsException;
 import com.rsn.mark1.model.Employee;
 import com.rsn.mark1.repository.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-public class EmployeeServiceImpl implements EmployeeService{
+@Service
+public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     EmployeeRepo employeeRepo;
@@ -19,11 +21,11 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public Optional<Employee> logIn(String email, StringBuilder password) {
+    public Optional<Employee> logIn(String email, String password) {
 
-        Optional<Employee> employee = employeeRepo.findByEmailAndPassword(email,password);
+        Optional<Employee> employee = employeeRepo.findByEmailAndPassword(email, password);
 
-        if (employee.isEmpty()){
+        if (employee.isEmpty()) {
             throw new InvalidCredentialsException("invalid credentials");
         }
         return employee;
@@ -35,7 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public List<Employee> getDataById(int id) {
-        return null;
+    public Optional<Employee> getDataById(int id) {
+        return employeeRepo.findById(id);
     }
 }
