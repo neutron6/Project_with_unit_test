@@ -11,6 +11,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,7 +27,7 @@ public class TestsCases {
     private EmployeeServiceImpl employeeService;
 
     @Test
-    public void TestCase_1_ForSignIn_Service_Layer() {
+    public void TestCase_1_ForSignIn_Service_Layer() { //---->passed
 
         Employee employee = new Employee(1, "rushi", "nichit", "rsn@gmail.com", "rushi@123");
 
@@ -38,7 +40,7 @@ public class TestsCases {
     }
 
     @Test
-    public void TestCase_2_ForCreateAccount_Service_Layer() {
+    public void TestCase_2_ForCreateAccount_Service_Layer() {//---->passed
         Employee employee = new Employee(1, "rushi", "nichit", "rsn@gmail.com", "rushi@123");
 
         Mockito.when(employeeRepo.save(employee)).thenReturn(employee);
@@ -56,6 +58,50 @@ public class TestsCases {
 
         //verify with repo save method
         Mockito.verify(employeeRepo, Mockito.times(1)).save(employee);
+
+    }
+
+    @Test
+    public void TestCase_3_ForGetAllEmployeeData() {//---->passed
+
+        List<Employee> employeeList = new ArrayList<>();
+
+        Employee employee1 = new Employee(1, "rushi", "nichit", "rsn@gmail.com", "rushi@123");
+        Employee employee2 = new Employee(2, "aaksh", "rao", "ak@gmail.com", "ak@123");
+        Employee employee3 = new Employee(3, "rushi", "nichit", "rsn@gmail.com", "rushi@123");
+        Employee employee4 = new Employee(4, "aaksh", "rao", "ak@gmail.com", "ak@123");
+        Employee employee5 = new Employee(5, "rushi", "nichit", "rsn@gmail.com", "rushi@123");
+
+
+        employeeList.add(employee1);
+        employeeList.add(employee2);
+        employeeList.add(employee3);
+        employeeList.add(employee4);
+        employeeList.add(employee5);
+
+        Mockito.when(employeeRepo.findAll()).thenReturn(employeeList);
+
+        List<Employee> result = employeeService.getAllData();
+
+        assertEquals(employeeList, result);
+
+        Mockito.verify(employeeRepo, Mockito.times(1)).findAll();
+
+
+    }
+
+    @Test
+    public void TestCase_4_ForGetDataById() {//---->passed
+
+        Optional<Employee> employee1 = Optional.of(new Employee(1, "rushi", "nichit", "rsn@gmail.com", "rushi@123"));
+
+        Mockito.when(employeeRepo.findById(1)).thenReturn(employee1);
+
+        Optional<Employee> result = employeeService.getDataById(1);
+
+        assertEquals(employee1, result);
+
+        Mockito.verify(employeeRepo, Mockito.times(1)).findById(1);
 
     }
 }

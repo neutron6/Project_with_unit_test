@@ -36,13 +36,13 @@ public class EmployeeController {
     @GetMapping("/getAllEmployeeData")
     @ResponseStatus(HttpStatus.OK)
     public List<Employee> getAllEmployeeData() {
-        logger.log(Level.INFO, "*****Getting all employee data*****");
+        logger.log(Level.INFO, "*****Getting all employee data******");
         return employeeServiceImpl.getAllData();
     }
 
     @GetMapping("/getDataByEmployeeId/{id}")
     public Optional<Employee> getDataByEmployeeId(@PathVariable("id") int employeeId) {
-        logger.log(Level.INFO,"*****getting data by employee id is activated*****");
+        logger.log(Level.INFO,"getting data by employee id is activated");
         return employeeServiceImpl.getDataById(employeeId);
     }
 
