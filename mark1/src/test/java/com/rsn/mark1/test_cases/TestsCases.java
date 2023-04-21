@@ -1,11 +1,20 @@
 package com.rsn.mark1.test_cases;
 
+<<<<<<< HEAD
 import com.rsn.mark1.model.Employee;
 import com.rsn.mark1.repository.EmployeeRepo;
 import com.rsn.mark1.service.EmployeeService;
 import com.rsn.mark1.service.EmployeeServiceImpl;
 import org.junit.Assert;
 import org.junit.Test;
+=======
+
+import com.rsn.mark1.model.Employee;
+import com.rsn.mark1.repository.EmployeeRepo;
+import com.rsn.mark1.service.EmployeeService;
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+>>>>>>> origin/main
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -14,29 +23,44 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Optional;
 
+<<<<<<< HEAD
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 
 @RunWith(MockitoJUnitRunner.class)
 //@WebMvcTest
+=======
+
+@RunWith(MockitoJUnitRunner.class)
+>>>>>>> origin/main
 public class TestsCases {
 
     @Mock
     private EmployeeRepo employeeRepo;
 
     @InjectMocks
+<<<<<<< HEAD
     private EmployeeServiceImpl employeeService;
 
     @Test
     public void TestCaseForSignIn_Service_Layer() {
 
         Employee employee = new Employee(1, "rushi", "nichit", "rsn@gmail.com", "rushi@123");
+=======
+    private EmployeeService employeeService;
+
+    @Test
+    public void TestCaseForSignIn() {
+
+        Employee employee = new Employee(1, "rushi", "nichit", "rsn@gmail.com",  "rushi@123");
+>>>>>>> origin/main
 
         Mockito.when(employeeRepo.findByEmailAndPassword(employee.getEmail(), employee.getPassword())).thenReturn(Optional.of(employee));
 
         Optional<Employee> result = employeeService.logIn(employee.getEmail(), employee.getPassword());
 
+<<<<<<< HEAD
         assertTrue(result.isPresent());
         assertEquals(employee, result.get());
     }
@@ -79,4 +103,9 @@ public class TestsCases {
 //    }
 
 
+=======
+        Assert.assertEquals(employee, result);
+
+    }
+>>>>>>> origin/main
 }

@@ -4,18 +4,13 @@ import com.rsn.mark1.exception.InvalidCredentialsException;
 import com.rsn.mark1.model.Employee;
 import com.rsn.mark1.repository.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
-@ComponentScan(basePackages = "com.rsn.mark1.service")
-public class EmployeeServiceImpl implements EmployeeService {
+public class EmployeeServiceImpl implements EmployeeService{
 
-    @Autowired(required = true)
+    @Autowired
     EmployeeRepo employeeRepo;
 
     @Override
@@ -24,11 +19,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Optional<Employee> logIn(String email, String password) {
+    public Optional<Employee> logIn(String email, StringBuilder password) {
 
-        Optional<Employee> employee = employeeRepo.findByEmailAndPassword(email, password);
+        Optional<Employee> employee = employeeRepo.findByEmailAndPassword(email,password);
 
-        if (employee.isEmpty()) {
+        if (employee.isEmpty()){
             throw new InvalidCredentialsException("invalid credentials");
         }
         return employee;
@@ -40,7 +35,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Optional<Employee> getDataById(int id) {
-        return employeeRepo.findById(id);
+    public List<Employee> getDataById(int id) {
+        return null;
     }
 }
