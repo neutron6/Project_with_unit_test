@@ -9,11 +9,11 @@ public interface EmployeeService {
 
     Employee saveData(Employee employee);
 
-    Optional<Employee> logIn(String email, StringBuilder password);
+    Optional<Employee> logIn(String email, String password);
 
     List<Employee> getAllData();
 
-    List<Employee> getDataById(int id);
+    Optional<Employee> getDataById(int id);
 
 
 }
