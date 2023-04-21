@@ -1,9 +1,16 @@
 package com.rsn.mark1.model;
 
+import lombok.*;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "Employee_Record_Data")
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Employee {
 
     @Id
@@ -21,6 +28,6 @@ public class Employee {
     private String email;
 
     @Column(name = "Employee_emailid_password")
-    private StringBuilder password;
+    private String password;
 
 }
