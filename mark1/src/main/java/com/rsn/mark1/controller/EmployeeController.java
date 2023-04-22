@@ -22,27 +22,27 @@ public class EmployeeController {
     @PostMapping("/createAccount")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Employee createAccount(@RequestBody Employee employee) {
-        logger.log(Level.INFO, "*****create account api is activated*****");
+        logger.log(Level.INFO, "*****create account API is activated*****");
         return employeeServiceImpl.saveData(employee);
     }
 
     @GetMapping("/signIn/{email}/{password}")
     @ResponseStatus(HttpStatus.OK)
     public Optional<Employee> signIn(@PathVariable("email") String employeeEmail, @PathVariable("password") String employeePass) {
-        logger.log(Level.INFO, "*****Sign in is activated*****");
+        logger.log(Level.INFO, "*****Sign in API is activated*****");
         return employeeServiceImpl.logIn(employeeEmail, employeePass);
     }
 
     @GetMapping("/getAllEmployeeData")
     @ResponseStatus(HttpStatus.OK)
     public List<Employee> getAllEmployeeData() {
-        logger.log(Level.INFO, "*****Getting all employee data******");
+        logger.log(Level.INFO, "*****Getting all employee data API is activated******");
         return employeeServiceImpl.getAllData();
     }
 
     @GetMapping("/getDataByEmployeeId/{id}")
     public Optional<Employee> getDataByEmployeeId(@PathVariable("id") int employeeId) {
-        logger.log(Level.INFO,"getting data by employee id is activated");
+        logger.log(Level.INFO,"getting data by employee id API is activated");
         return employeeServiceImpl.getDataById(employeeId);
     }
 
