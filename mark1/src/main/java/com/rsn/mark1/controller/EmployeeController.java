@@ -20,7 +20,7 @@ public class EmployeeController {
     private EmployeeServiceImpl employeeServiceImpl;
 
     @PostMapping("/createAccount")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.CREATED)
     public Employee createAccount(@RequestBody Employee employee) {
         logger.log(Level.INFO, "*****create account API is activated*****");
         return employeeServiceImpl.saveData(employee);
