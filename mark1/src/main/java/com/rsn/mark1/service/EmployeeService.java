@@ -1,5 +1,6 @@
 package com.rsn.mark1.service;
 
+import com.rsn.mark1.exception.UpdateDataEmployeeException;
 import com.rsn.mark1.model.Employee;
 
 import java.util.List;
@@ -7,13 +8,14 @@ import java.util.Optional;
 
 public interface EmployeeService {
 
-    Employee saveData(Employee employee);
+	Employee saveData(Employee employee);
 
-    Optional<Employee> logIn(String email, String password);
+	Optional<Employee> logIn(String email, String password);
 
-    List<Employee> getAllData();
+	List<Employee> getAllData();
 
-    Optional<Employee> getDataById(int id);
+	Optional<Employee> getDataById(int id);
 
+	Employee updatedata(Employee employee) throws UpdateDataEmployeeException;
 
 }
