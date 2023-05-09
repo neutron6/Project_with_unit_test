@@ -24,7 +24,7 @@ public class AdminServiceImpl implements AdminService {
 
 		Optional<Admin> adminOptional = adminRepo.findByAdminId(adminId);
 		if (adminOptional.isPresent()) {
-			
+			return true;
 		}
 
 		return false;
