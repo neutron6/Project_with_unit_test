@@ -5,12 +5,16 @@ import com.rsn.mark1.model.Employee;
 import com.rsn.mark1.service.EmployeeServiceImpl;
 import org.junit.jupiter.api.Timeout;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.retry.annotation.Retryable;
+import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+
+import java.util.UUID;
 
 import java.util.concurrent.TimeUnit;
 
@@ -29,9 +33,11 @@ public class EmployeeController {
     @PostMapping("/createAccount")
     @ResponseStatus(HttpStatus.CREATED)
     @Timeout(value = 1000, unit = TimeUnit.MILLISECONDS)
-    public Employee createAccount(@RequestBody Employee employee) {
+    public ResponseEntity<String> createAccount(@RequestBody Employee employee) {
         logger.log(Level.INFO, "*****create account API is activated*****");
-        return employeeServiceImpl.saveData(employee);
+        employeeServiceImpl.saveData(employee);
+        System.out.println("-----------> EMPLOYEE ID =====>" + employee.getId());
+        return ResponseEntity.ok("****** Account is created successfully ***** ");
     }
 
     @GetMapping("/signIn/{email}/{password}")
@@ -50,7 +56,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/getDataByEmployeeId/{id}")
-    public Optional<Employee> getDataByEmployeeId(@PathVariable("id") int employeeId) {
+    public Optional<Employee> getDataByEmployeeId(@PathVariable("id") UUID employeeId) {
         logger.log(Level.INFO, "getting data by employee id API is activated");
         return employeeServiceImpl.getDataById(employeeId);
     }
@@ -64,10 +70,26 @@ public class EmployeeController {
 
     @GetMapping("/sortingByField/{field}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Employee> sortingByField(@PathVariable String field){
+    public List<Employee> sortingByField(@PathVariable String field) {
         logger.log(Level.INFO, "******** sortingByField API is calling *********");
         List<Employee> employeeList = employeeServiceImpl.findEmployeeWithSorting(field);
         return employeeList;
+    }
+
+    @GetMapping("/sortByPagination/{offset}/{pageSize}/{field}")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<Employee> sortByPagination(@PathVariable Integer offset, @PathVariable Integer pageSize, @PathVariable String field) {
+        logger.log(Level.INFO, "******** sortByPagination API is calling *********");
+        Page<Employee> employeePage = employeeServiceImpl.getEmployeeWithPaginationAndSort(offset, pageSize, field);
+        return employeePage;
+    }
+
+    @DeleteMapping("/deleteAccount/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<String> deleteAccount(UUID id) throws UpdateDataEmployeeException {
+        logger.log(Level.INFO, "\"******** deleteAccount API is calling *********");
+        employeeServiceImpl.deleteDataById(id);
+        return ResponseEntity.ok("***** Account is deleted successfully ******");
     }
 
 

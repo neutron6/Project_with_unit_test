@@ -11,10 +11,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
@@ -34,7 +36,7 @@ public class TestsCasesForController {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        Employee employee = new Employee(1, "John", "don", "john@gmail.com", "john123");
+        Employee employee = new Employee(UUID.randomUUID(), "John", "don", "john@gmail.com", "john123");
 
     }
 
@@ -43,7 +45,7 @@ public class TestsCasesForController {
     public void Test_1_for_CreateAccount() {
 
         when(employeeService.saveData(employee)).thenReturn(employee);
-        Employee result = employeeController.createAccount(employee);
+        ResponseEntity<String> result = employeeController.createAccount(employee);
         assertEquals(employee, result);
         Mockito.verify(employeeService, Mockito.times(1)).saveData(employee);
 
@@ -52,7 +54,7 @@ public class TestsCasesForController {
     @Test
     public void Test_2_for_signIn() {
 
-        Optional<Employee> employee1 = Optional.of(new Employee(1, "John", "don", "john@gmail.com", "john123"));
+        Optional<Employee> employee1 = Optional.of(new Employee(UUID.randomUUID(), "John", "don", "john@gmail.com", "john123"));
         when(employeeService.logIn("john@gmail.com", "john123")).thenReturn(employee1);
         Optional<Employee> result = employeeController.signIn("john@gmail.com", "john123");
         assertEquals(employee1, result);
@@ -63,11 +65,11 @@ public class TestsCasesForController {
     @Test
     public void Test_3_for_getAllEmployeeData() {
         List<Employee> employeeList = new ArrayList<>();
-        Employee employee1 = new Employee(1, "rushi", "nichit", "rsn@gmail.com", "rushi@123");
-        Employee employee2 = new Employee(2, "aaksh", "rao", "ak@gmail.com", "ak@123");
-        Employee employee3 = new Employee(3, "rushi", "nichit", "rsn@gmail.com", "rushi@123");
-        Employee employee4 = new Employee(4, "aaksh", "rao", "ak@gmail.com", "ak@123");
-        Employee employee5 = new Employee(5, "rushi", "nichit", "rsn@gmail.com", "rushi@123");
+        Employee employee1 = new Employee(UUID.randomUUID(), "rushi", "nichit", "rsn@gmail.com", "rushi@123");
+        Employee employee2 = new Employee(UUID.randomUUID(), "aaksh", "rao", "ak@gmail.com", "ak@123");
+        Employee employee3 = new Employee(UUID.randomUUID(), "rushi", "nichit", "rsn@gmail.com", "rushi@123");
+        Employee employee4 = new Employee(UUID.randomUUID(), "aaksh", "rao", "ak@gmail.com", "ak@123");
+        Employee employee5 = new Employee(UUID.randomUUID(), "rushi", "nichit", "rsn@gmail.com", "rushi@123");
 
 
         employeeList.add(employee1);
@@ -85,11 +87,11 @@ public class TestsCasesForController {
     @Test
     public void Test_4_for_getDataByEmployeeId() {
 
-        Optional<Employee> employee2 = Optional.of(new Employee(1, "rushi", "nichit", "rsn@gmail.com", "rushi@123"));
-        when(employeeService.getDataById(1)).thenReturn(employee2);
-        Optional<Employee> result = employeeController.getDataByEmployeeId(1);
+        Optional<Employee> employee2 = Optional.of(new Employee(UUID.randomUUID(), "rushi", "nichit", "rsn@gmail.com", "rushi@123"));
+        when(employeeService.getDataById(UUID.randomUUID())).thenReturn(employee2);
+        Optional<Employee> result = employeeController.getDataByEmployeeId(UUID.randomUUID());
         assertEquals(employee2, result);
-        Mockito.verify(employeeService, times(1)).getDataById(1);
+        Mockito.verify(employeeService, times(1)).getDataById(UUID.randomUUID());
     }
 
 }
