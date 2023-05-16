@@ -16,6 +16,9 @@ public interface EmployeeService {
 
 	Optional<Employee> getDataById(int id);
 
-	Employee updatedata(Employee employee) throws UpdateDataEmployeeException;
+  Employee updatedata(Employee employee) throws UpdateDataEmployeeException;
+
+  List<Employee>  findEmployeeWithSorting(String field);
+
 
 }
