@@ -16,6 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class NewTest {
 
 	@Test
 	public void Test_For_createAccount() throws Exception {
-		Employee employee = new Employee(1, "John", "Don", "john@gmail,com", "123");
+		Employee employee = new Employee(UUID.randomUUID(), "John", "Don", "john@gmail,com", "123");
 
 		mockMvc.perform(post("/v1/api/createAccount").contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(employee))).andExpect(status().isCreated()).andDo(print());
@@ -54,9 +55,9 @@ public class NewTest {
 
 	@Test
 	public void Test_For_signIn() throws Exception {
-		Employee employee = new Employee(1, "John", "Don", "john@gmail.com", "123");
-		Employee employee1 = new Employee(2, "rock", "kelvion", "rock@gmail.com", "123");
-		Employee employee2 = new Employee(3, "John", "cena", "cena@gmail.com", "123");
+		Employee employee = new Employee(UUID.randomUUID(), "John", "Don", "john@gmail.com", "123");
+		Employee employee1 = new Employee(UUID.randomUUID(), "rock", "kelvion", "rock@gmail.com", "123");
+		Employee employee2 = new Employee(UUID.randomUUID(), "John", "cena", "cena@gmail.com", "123");
 
 		when(employeeService.logIn("rock@gmail.com", "123")).thenReturn(Optional.of(employee1));
 		mockMvc.perform(get("/v1/api/signIn/{email}/{password}", "rock@gmail.com", "123")).andExpect(status().isOk())
@@ -69,11 +70,11 @@ public class NewTest {
 	public void Test_For_getAllEmployeeData() throws Exception {
 		List<Employee> employeeList = new ArrayList<>();
 
-		Employee employee1 = new Employee(1, "rushi", "nichit", "rsn@gmail.com", "rushi@123");
-		Employee employee2 = new Employee(2, "aaksh", "rao", "ak@gmail.com", "ak@123");
-		Employee employee3 = new Employee(3, "rushi", "nichit", "rsn@gmail.com", "rushi@123");
-		Employee employee4 = new Employee(4, "aaksh", "rao", "ak@gmail.com", "ak@123");
-		Employee employee5 = new Employee(5, "rushi", "nichit", "rsn@gmail.com", "rushi@123");
+		Employee employee1 = new Employee(UUID.randomUUID(), "rushi", "nichit", "rsn@gmail.com", "rushi@123");
+		Employee employee2 = new Employee(UUID.randomUUID(), "aaksh", "rao", "ak@gmail.com", "ak@123");
+		Employee employee3 = new Employee(UUID.randomUUID(), "rushi", "nichit", "rsn@gmail.com", "rushi@123");
+		Employee employee4 = new Employee(UUID.randomUUID(), "aaksh", "rao", "ak@gmail.com", "ak@123");
+		Employee employee5 = new Employee(UUID.randomUUID(), "rushi", "nichit", "rsn@gmail.com", "rushi@123");
 
 		employeeList.add(employee1);
 		employeeList.add(employee2);
@@ -90,9 +91,9 @@ public class NewTest {
 
 	@Test
 	public void Test_For_getDataByEmployeeId() throws Exception {
-		Employee employee1 = new Employee(1, "rushi", "nichit", "rsn@gmail.com", "rushi@123");
+		Employee employee1 = new Employee(UUID.randomUUID(), "rushi", "nichit", "rsn@gmail.com", "rushi@123");
 
-		when(employeeService.getDataById(1)).thenReturn(Optional.of(employee1));
+		when(employeeService.getDataById(UUID.randomUUID())).thenReturn(Optional.of(employee1));
 		mockMvc.perform(get("/v1/api/getDataByEmployeeId/{id}", 1)).andExpect(status().isOk())
 				.andExpect(jsonPath("$.id").value(employee1.getId()))
 				/*
@@ -108,8 +109,8 @@ public class NewTest {
 	@Test
 	public void Test_For_updateEmployeeData() throws Exception {
 		// Create the input and output employee objects
-		Employee inputEmployee = new Employee(1, "rushi", "nichit", "rsn@gmail.com", "rushi@123");
-		Employee outputEmployee = new Employee(1, "rushi", "nichit", "rsn@gmail.com", "rushi@456");
+		Employee inputEmployee = new Employee(UUID.randomUUID(), "rushi", "nichit", "rsn@gmail.com", "rushi@123");
+		Employee outputEmployee = new Employee(UUID.randomUUID(), "rushi", "nichit", "rsn@gmail.com", "rushi@456");
 
 		// Mock the employee service to return the output employee when given the input
 		// employee and ID

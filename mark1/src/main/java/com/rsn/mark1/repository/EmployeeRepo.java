@@ -6,10 +6,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface EmployeeRepo extends JpaRepository<Employee, Integer> {
     Optional<Employee> findByEmailAndPassword(String email, String password);
 
-    List<Employee> findAllById(int id);
+    List<Employee> findAllById(UUID id);
+
+    Optional<Employee> findById(UUID id);
 }

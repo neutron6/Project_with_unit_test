@@ -1,15 +1,19 @@
 package com.rsn.mark1.service;
 
 import com.rsn.mark1.exception.InvalidCredentialsException;
+import com.rsn.mark1.exception.RecordNotFoundException;
 import com.rsn.mark1.exception.UpdateDataEmployeeException;
 import com.rsn.mark1.model.Employee;
 import com.rsn.mark1.repository.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -39,7 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Optional<Employee> getDataById(int id) {
+    public Optional<Employee> getDataById(UUID id) {
         return employeeRepo.findById(id);
     }
 
@@ -67,6 +71,27 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> findEmployeeWithSorting(String field) {
         return employeeRepo.findAll(Sort.by(Sort.Direction.ASC, field));
+    }
+
+
+    @Override
+    public Page<Employee> getEmployeeWithPaginationAndSort(Integer offset, Integer pageSize, String field) {
+        Page<Employee> employeePage = employeeRepo.findAll(PageRequest.of(offset, pageSize).withSort(Sort.by(field)));
+        return employeePage;
+
+    }
+
+    @Override
+    public void deleteDataById(UUID id) throws UpdateDataEmployeeException {
+        Optional<Employee> deleteEmp = employeeRepo.findById(id);
+
+        if (deleteEmp.isPresent()) {
+            Employee employee1 = deleteEmp.get();
+            employeeRepo.delete(employee1);
+        } else {
+            throw new UpdateDataEmployeeException("**| THE ENTERING DATA IS INVALID |**");
+        }
+
     }
 
 

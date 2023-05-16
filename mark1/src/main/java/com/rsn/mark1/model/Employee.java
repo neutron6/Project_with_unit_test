@@ -1,8 +1,11 @@
 package com.rsn.mark1.model;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "Employee")
@@ -14,8 +17,14 @@ import javax.persistence.*;
 public class Employee {
 
     @Id
-    @GeneratedValue
-    private int id;
+    @Type(type="uuid-char")
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name="id", columnDefinition = "VARCHAR(255)", insertable = false, updatable = false, nullable = false)
+    private UUID id;
 
     private String firstName;
 
