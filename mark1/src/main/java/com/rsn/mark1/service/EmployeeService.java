@@ -1,5 +1,6 @@
 package com.rsn.mark1.service;
 
+import com.rsn.mark1.exception.UpdateDataEmployeeException;
 import com.rsn.mark1.model.Employee;
 
 import java.util.List;
@@ -15,5 +16,8 @@ public interface EmployeeService {
 
     Optional<Employee> getDataById(int id);
 
+    Employee updatedata(Employee employee) throws UpdateDataEmployeeException;
+
+     List<Employee>  findEmployeeWithSorting(String field);
 
 }
