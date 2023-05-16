@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
+
 @Table(name = "Employee")
 @Builder
 @AllArgsConstructor
@@ -24,6 +25,7 @@ public class Employee {
     private String email;
 
     private String password;
+
 
 
 

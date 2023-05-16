@@ -6,11 +6,15 @@ import com.rsn.mark1.service.EmployeeServiceImpl;
 import org.junit.jupiter.api.Timeout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+
 import java.util.concurrent.TimeUnit;
+
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -70,3 +74,21 @@ public class EmployeeController {
 }
 
 
+
+	@GetMapping("/getDataByEmployeeId/{id}")
+	public Optional<Employee> getDataByEmployeeId(@PathVariable("id") int employeeId) {
+		logger.log(Level.INFO, "*******getting data by employee id API is activated******");
+		return employeeServiceImpl.getDataById(employeeId);
+	}
+
+	@PutMapping("/updateEmployeeData/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	@Retryable(maxAttempts = 5, value = { TimeoutException.class })
+	public Optional<Employee> updateEmployeeData( @RequestBody Employee employee)
+			throws UpdateDataEmployeeException {
+		logger.log(Level.INFO, "*****update employee data API is activated*****");
+		return Optional.ofNullable(employeeServiceImpl.updatedata(employee));
+
+	}
+
+}
