@@ -10,20 +10,24 @@ import java.util.UUID;
 
 public interface EmployeeService {
 
-    Employee saveData(Employee employee);
+	Employee saveData(Employee employee);
 
-    Optional<Employee> logIn(String email, String password);
+	Optional<Employee> logIn(String email, String password);
 
-    List<Employee> getAllData();
+	List<Employee> getAllData();
 
     Optional<Employee> getDataById(UUID id);
 
-    Employee updatedata(Employee employee) throws UpdateDataEmployeeException;
 
-    List<Employee> findEmployeeWithSorting(String field);
+  Employee updatedata(Employee employee) throws UpdateDataEmployeeException;
+
+  List<Employee>  findEmployeeWithSorting(String field);
+
+
 
     Page<Employee> getEmployeeWithPaginationAndSort(Integer offset, Integer pageSize, String field);
 
      void deleteDataById(UUID id) throws UpdateDataEmployeeException;
+
 
 }
