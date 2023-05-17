@@ -1,15 +1,18 @@
 package com.rsn.mark1.controller;
 
+import com.rsn.mark1.exception.DateNotFoundException;
 import com.rsn.mark1.exception.UpdateDataEmployeeException;
 import com.rsn.mark1.model.Employee;
 import com.rsn.mark1.service.EmployeeServiceImpl;
 import org.junit.jupiter.api.Timeout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -31,7 +34,7 @@ public class EmployeeController {
     public ResponseEntity<String> createAccount(@RequestBody Employee employee) {
         logger.log(Level.INFO, "*****create account API is activated*****");
         employeeServiceImpl.saveData(employee);
-        System.out.println("-----------> EMPLOYEE ID =====>" + employee.getId());
+        System.out.println("-----------> EMPLOYEE ID =====>" + employee.getId() + " ----- OF ---->" + employee.getFirstName());
         return ResponseEntity.ok("****** Account is created successfully ***** ");
     }
 
@@ -85,6 +88,20 @@ public class EmployeeController {
         logger.log(Level.INFO, "\"******** deleteAccount API is calling *********");
         employeeServiceImpl.deleteDataById(id);
         return ResponseEntity.ok("***** Account is deleted successfully ******");
+    }
+
+    @GetMapping("/enterDate/employee")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<Employee>> enterDate(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+                                                    @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to) throws DateNotFoundException {
+        List<Employee> employeeList = employeeServiceImpl.findEmployeeBetweenDate(from, to);
+        return (ResponseEntity<List<Employee>>) employeeList;
+    }
+
+    @GetMapping("/singleDateEntryFeature/employee/{onDate}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<Employee>> singleDateEntryFeature(@PathVariable LocalDate onDate) throws DateNotFoundException {
+        return ResponseEntity.ok(employeeServiceImpl.findEmployeeOnDate(onDate));
     }
 
 
