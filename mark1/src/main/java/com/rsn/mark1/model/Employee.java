@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+
 @Table(name = "Employee")
 @Builder
 @AllArgsConstructor
@@ -36,6 +37,7 @@ public class Employee {
     private String password;
 
     private LocalDate date;
+
 
 
 
