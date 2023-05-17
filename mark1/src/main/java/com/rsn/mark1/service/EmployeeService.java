@@ -1,9 +1,12 @@
 package com.rsn.mark1.service;
 
+import com.rsn.mark1.exception.DateNotFoundException;
 import com.rsn.mark1.exception.UpdateDataEmployeeException;
 import com.rsn.mark1.model.Employee;
 import org.springframework.data.domain.Page;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -29,5 +32,8 @@ public interface EmployeeService {
 
      void deleteDataById(UUID id) throws UpdateDataEmployeeException;
 
+     List<Employee> findEmployeeBetweenDate(LocalDate from, LocalDate to) throws DateNotFoundException;
+
+     List<Employee> findEmployeeOnDate(LocalDate onDate) throws DateNotFoundException;
 
 }

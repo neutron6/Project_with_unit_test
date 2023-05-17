@@ -1,5 +1,6 @@
 package com.rsn.mark1.service;
 
+import com.rsn.mark1.exception.DateNotFoundException;
 
 import com.rsn.mark1.exception.InvalidCredentialsException;
 import com.rsn.mark1.exception.RecordNotFoundException;
@@ -13,6 +14,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -103,6 +106,25 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     }
 
+    @Override
+    public List<Employee> findEmployeeBetweenDate(LocalDate from, LocalDate to) throws DateNotFoundException {
+        if (from.isAfter(to)) {
+            throw new DateNotFoundException("THE DATE YOU ENTER MIGHT BE INCORRECT");
+        } else {
+            return employeeRepo.findAllByDateBetween(from.atStartOfDay(), to.atTime(23, 59, 59, 999999999));
+        }
+    }
+
+    @Override
+    public List<Employee> findEmployeeOnDate(LocalDate onDate) throws DateNotFoundException {
+        Optional<Employee> employee = employeeRepo.findById(UUID.randomUUID());
+        if (employee.isPresent()) {
+            return employeeRepo.findAllByDateBetween(onDate.atStartOfDay(), onDate.atTime(23, 59, 59, 999999999));
+        } else {
+            throw new DateNotFoundException("THE DATE YOU ENTER MIGHT BE INCORRECT");
+        }
+
+    }
 
 
 }
